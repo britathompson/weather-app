@@ -1,0 +1,105 @@
+html,
+body {
+  background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  min-width: 100%;
+  min-height: 100%;
+}
+
+.weather-page {
+  background-image: linear-gradient(15deg, #13547a 0%, #80d0c7 100%);
+  border-radius: 5px;
+  color: #fff;
+  font-family: "Roboto", sans-serif;
+  height: 550px;
+  margin: 50px auto 50px auto;
+  padding: 60px 20px;
+  text-align: center;
+  max-width: 450px;
+  min-width: 450px;
+}
+
+header {
+  font-family: "Dawning of a New Day", cursive;
+  font-size: 24px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+form {
+  text-align: left;
+}
+
+form .search-bar {
+  width: 40%;
+}
+
+.button,
+.current-button {
+  padding: 1px 6px;
+  color: grey;
+}
+
+.current-button {
+  position: relative;
+  
+  border: none;
+}
+
+h1 {
+  font-size: 26px;
+  margin: 30px auto 0 auto;
+}
+
+.info-block {
+  margin-top: 15px;
+}
+
+.current-temp {
+  font-size: 90px;
+  font-weight: 900;
+  line-height: 150%;
+}
+
+/* .city {
+  text-transform: capitalize;
+} */
+
+.units {
+  font-size: 18px;
+  position: relative;
+  top: -45px;
+}
+
+.day-time {
+  font-size: 20px;
+  font-weight: bolder;
+}
+
+.current-text {
+  font-size: 16px;
+  line-height: 30%;
+}
+
+.emoji {
+  font-size: 10px;
+}
+
+.forecast {
+  flex-wrap: wrap;
+  font-size: 14px;
+  padding: 40px 10px;
+}
+
+#celsius-link,
+#fahrenheit-link {
+  color: white;
+}
+
+#celsius-link:hover,
+#fahrenheit-link:hover {
+  color: blue;
+}
