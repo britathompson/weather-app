@@ -21,6 +21,7 @@
 
   <body>
     <div class="container">
+      <div class="weather-page-wrapper">
       <div class="weather-page">
         <header>What's my weather?</header>
         <form id="search-form">
@@ -51,14 +52,14 @@
           <div class="temp-block col-6">
             <span class="current-temp" id="temperature"></span>
             <span class="units"
-              ><a href="#" id="celsius-link">°C</a> |
-              <a href="#" id="fahrenheit-link">°F</a></span
+              ><a href="#" class="celsius-link" id="celsius-link">°C</a> |
+              <a href="#" class="fahrenheit-link" id="fahrenheit-link">°F</a></span
             >
           </div>
           <div class="info-block col-6">
-            <p class="day-time" id="day-time"></p>
+            <p class="last-updated">Last updated: <span class="day-time" id="day-time"></span></p>
             <p class="current-text" id="current-weather-description"></p>
-            <!-- <img class="emoji" src="images/lightlycloudy.png" alt="cloud and sun"> -->
+            
           </div>
         </div>
 
@@ -94,8 +95,10 @@
             -22° | -82°
           </div>
         </div>
-        <footer><a href="https://github.com/britathompson/weather-app" target="_blank" class="git-link">Open-source code</a> by Brita Thompson</footer>
       </div>
+      <footer><a href="https://github.com/britathompson/weather-app" target="_blank" class="git-link">Open-source code</a> by
+        Brita Thompson</footer>
+    </div>
     </div>
     <script src="src/logic.js"></script>
   </body>

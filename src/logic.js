@@ -1,16 +1,17 @@
 ///////////////////////////////////////////////////////////////////////////
-// Fetches local time and changes from military to standard,
-// example: 18:45 to 6:45 PM. Uses built-in JS new Date() Function.
-let now = new Date();
-let militaryHours = now.getHours();
-let rawMinutes = now.getMinutes();
-let days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-let today = days[now.getDay()];
-let hours;
-let minutes;
-let toggleAmPm;
-
+// Fetches and displays local day and time, changes time from military to 
+// standard, example: 18:45 to 6:45 PM. Uses built-in JS new Date() Function.
 function displayDayTime() {
+  let now = new Date();
+  let militaryHours = now.getHours();
+  let rawMinutes = now.getMinutes();
+  let days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  let today = days[now.getDay()];
+  let hours;
+  let minutes;
+  let toggleAmPm;
+
+
   if (militaryHours > 12) {
     hours = militaryHours - 12;
     toggleAmPm = 'PM';
@@ -26,11 +27,11 @@ function displayDayTime() {
   } else {
     minutes = rawMinutes;
   }
+  let currentDayTime = document.querySelector("#day-time");
+  currentDayTime.innerHTML = `${today} ${hours}:${minutes} ${toggleAmPm}`;
 }
 
 displayDayTime();
-let currentDayTime = document.querySelector("#day-time");
-currentDayTime.innerHTML = `${today} ${hours}:${minutes} ${toggleAmPm}`;
 ///////////////////////////////////////////////////////////////////////////
 
 
@@ -46,7 +47,8 @@ function showData(response) {
   document.querySelector("#feels-like").innerHTML = Math.round(response.data.main.feels_like);
   document.querySelector("#humidity").innerHTML = response.data.main.humidity;
   document.querySelector("#wind").innerHTML = Math.round(response.data.wind.speed);
-  document.querySelector("#current-weather-description").innerHTML = response.data.weather[0].main;
+  document.querySelector("#current-weather-description").innerHTML = response.data.weather[0].description;
+  console.log(response.data);
 }
 
 function fetchData(city) {

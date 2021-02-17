@@ -8,19 +8,6 @@ body {
   min-height: 100%;
 }
 
-.weather-page {
-  background-image: linear-gradient(to right, #b4a28a 0%, #304352 100%);
-  border-radius: 5px;
-  color: #fff;
-  font-family: "Roboto", sans-serif;
-  height: 550px;
-  margin: 50px auto 50px auto;
-  padding: 60px 20px;
-  text-align: center;
-  max-width: 500px;
-  min-width: 500px;
-}
-
 header {
   font-family: "Dawning of a New Day", cursive;
   font-size: 24px;
@@ -32,7 +19,35 @@ form {
   text-align: left;
 }
 
-form .search-bar {
+h1 {
+  font-size: 26px;
+  margin: 30px auto 0 auto;
+  color: pink;
+}
+
+footer {
+  font-size: 12px;
+  color: white;
+  margin-top: 8px;
+}
+
+.weather-page-wrapper {
+  max-width: 500px;
+  min-width: 500px;
+  margin: 50px auto 50px auto;
+}
+
+.weather-page {
+  background-image: linear-gradient(to right, #b4a28a 0%, #304352 100%);
+  border-radius: 5px;
+  color: #fff;
+  font-family: "Roboto", sans-serif;
+  height: 550px;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.search-bar {
   width: 40%;
 }
 
@@ -44,19 +59,9 @@ form .search-bar {
 
 .current-button {
   position: relative;
-  
   border: none;
 }
 
-h1 {
-  font-size: 26px;
-  margin: 30px auto 0 auto;
-  color: pink;
-}
-
-.info-block {
-  margin-top: 5px;
-}
 
 .current-temp {
   font-size: 90px;
@@ -70,6 +75,11 @@ h1 {
   top: -45px;
 }
 
+.last-updated {
+  font-size: 12px;
+  margin-bottom: 0;
+}
+
 .day-time {
   font-size: 16px;
   font-weight: bolder;
@@ -81,29 +91,26 @@ h1 {
   font-size: 16px;
 }
 
-
+.current-text::first-letter {
+  text-transform: capitalize;
+}
 
 .forecast {
   flex-wrap: wrap;
   font-size: 12px;
-  padding: 40px 10px;
+  padding: 60px 10px;
   font-weight: bold;
   
 }
 
-#celsius-link,
-#fahrenheit-link {
+.celsius-link,
+.fahrenheit-link {
   color: white;
 }
 
-#celsius-link:hover,
-#fahrenheit-link:hover {
+.celsius-link:hover,
+.fahrenheit-link:hover {
   color: blue;
-}
-
-footer {
-  font-size: 12px;
-  color: white;
 }
 
 .git-link {
