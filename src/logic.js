@@ -1,4 +1,4 @@
-///////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
 // Fetches and displays local day and time, changes time from military to 
 // standard, example: 18:45 to 6:45 PM. Uses built-in JS new Date() Function.
 function displayDayTime() {
@@ -32,11 +32,11 @@ function displayDayTime() {
 }
 
 displayDayTime();
-///////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
 
 
 
-///////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
 // Fetches and displays current temperature, city name, feels-like, humidity,
 // wind, and weather-description based on user form input, as well as whatever 
 // initial parameter is fed through fetchData upon loading. Uses Axios AJAX 
@@ -50,6 +50,8 @@ function showData(response) {
   document.querySelector("#current-weather-description").innerHTML = response.data.weather[0].description;
   document.querySelector("#icon").setAttribute("src", `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`);
   document.querySelector("#icon").setAttribute("alt", response.data.weather[0].description);
+
+  celsiusTemperature = Math.round(response.data.main.temp);
 }
 
 function fetchData(city) {
@@ -93,31 +95,42 @@ function getCurrentPosition(event) {
 }
 
 let currentButton = document.querySelector("#current-button");
-currentButton.addEventListener("click", getCurrentPosition);
+currentButton.addEventListener('click', getCurrentPosition);
 ////////////////////////////////////////////////////////////////////////////
 
 
 
+////////////////////////////////////////////////////////////////////////////
+// Targets the innerHTML of temperature to convert to fahrenheit when 'F'
+// is clicked and back to celsius when 'C' is clicked. Adds/removes default
+// link styling on inactive links.
+function toCelsius(event) {
+  event.preventDefault();
+  let temperature = document.querySelector("#temperature");
+  temperature.innerHTML = celsiusTemperature;
 
-// function toFahrenheit(event) {
-//   event.preventDefault();
-//   let temperature = document.querySelector("#temperature");
-//   let changeToFahrenheit = (temperature * (9/5)) + 32;
-//   temperature.innerHTML = `${changeToFahrenheit}`;
-// }
+  celsius.classList.add("active");
+  fahrenheit.classList.remove("active");
+}
 
-// function toCelsius(event) {
-//   event.preventDefault();
-//   let temperature = document.querySelector("#temperature");
-//   let changeToCelsius = (temperature - 32) * (5/9);
-//   temperature.innerHTML = `${changeToCelsius}`;
-// }
+function toFahrenheit(event) {
+  event.preventDefault();
+  let temperature = document.querySelector("#temperature");
+  let changeToFahrenheit = (celsiusTemperature * (9 / 5)) + 32;
+  temperature.innerHTML = Math.round(changeToFahrenheit);
 
-// let fahrenheit = document.querySelector("#fahrenheit-link");
-// let celsius = document.querySelector("#celsius-link")
+  celsius.classList.remove("active");
+  fahrenheit.classList.add("active");
+}
 
-// fahrenheit.addEventListener('click', toFahrenheit);
-// celsius.addEventListener('click', toCelsius);
+let celsiusTemperature = null;
+
+let fahrenheit = document.querySelector("#fahrenheit-link");
+fahrenheit.addEventListener('click', toFahrenheit);
+
+let celsius = document.querySelector("#celsius-link")
+celsius.addEventListener('click', toCelsius);
+////////////////////////////////////////////////////////////////////////////
 
 
 

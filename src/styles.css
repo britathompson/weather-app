@@ -1,6 +1,6 @@
 html,
 body {
-  background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  background-image: linear-gradient(135deg, #ffffff 0%, #97a7c2 100%);
   position: fixed;
   top: 0;
   left: 0;
@@ -62,7 +62,6 @@ footer {
   border: none;
 }
 
-
 .current-temp {
   font-size: 90px;
   font-weight: 900;
@@ -102,20 +101,29 @@ footer {
   font-weight: bold;
 }
 
-.celsius-link,
-.fahrenheit-link {
-  color: white;
-}
-
 .celsius-link:hover,
 .fahrenheit-link:hover {
   color: blue;
 }
 
 .git-link {
-  color: pink;
+  color: rgb(252, 159, 175);
 }
 
 .git-link:hover {
   color: red;
+}
+
+.temp-block .active {
+  color: black;
+}
+
+.temp-block .active:hover {
+  cursor: default;
+}
+
+.celsius-link,
+.fahrenheit-link {
+  color: white;
+  text-decoration: none;
 }
