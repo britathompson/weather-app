@@ -34,7 +34,27 @@ function displayDayTime() {
 displayDayTime();
 ////////////////////////////////////////////////////////////////////////////
 
+function formatHours(timestamp) {
+  let now = new Date(timestamp);
+  let militaryHours = now.getHours();
+  let rawMinutes = now.getMinutes();
+  let hours;
+  let minutes;
 
+  if (militaryHours > 12) {
+    hours = militaryHours - 12;
+  } else if (militaryHours = 12) {
+    hours = militaryHours;
+  } else {
+    hours = militaryHours;
+  }
+  if (rawMinutes < 10) {
+    minutes = `0${rawMinutes}`;
+  } else {
+    minutes = rawMinutes;
+  }
+  return `${hours}:${minutes}`
+}
 
 ////////////////////////////////////////////////////////////////////////////
 // Fetches and displays current temperature, city name, feels-like, humidity,
@@ -54,11 +74,35 @@ function showData(response) {
   celsiusTemperature = Math.round(response.data.main.temp);
 }
 
+function displayForecast(response) {
+  let forecastElement = document.querySelector("#forecast");
+  let forecast = response.data.list[0];
+  console.log(response.data);
+
+  forecastElement.innerHTML = `
+    <div class="col-2">
+      <span>
+        ${formatHours(forecast.dt * 1000)}
+      </span>
+      <br />
+      <span>
+        ${Math.round(forecast.main.temp_max)}° | ${Math.round(forecast.main.temp_min)}° 
+      </span>
+      <br />
+      <img  src="http://openweathermap.org/img/wn/${forecast.weather[0].icon}@2x.png"
+            alt="weather icon"
+      />
+    </div>`;
+}
+
 function fetchData(city) {
   let apiKey = '55bf9ac355060024d43ce8b4b16fd6fa';
   let units = 'metric';
   let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=${units}`;
   axios.get(apiUrl).then(showData);
+
+  apiUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=${units}`;
+  axios.get(apiUrl).then(displayForecast);
 }
 
 function cityInput(event) {
@@ -134,7 +178,17 @@ celsius.addEventListener('click', toCelsius);
 
 
 
+////////////////////////////////////////////////////////////////////////////
+// function displayNextDay() {
+//   let then = new Date();
+//   let days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+//   let day = days[then.getDay()];
+  
+//   let currentDayTime = document.querySelector("#day-time");
 
+// }
 
+// displayNextDay();
+////////////////////////////////////////////////////////////////////////////
 
 
