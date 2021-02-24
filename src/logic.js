@@ -1,34 +1,12 @@
 ////////////////////////////////////////////////////////////////////////////
 // Fetches and displays local day and time, changes time from military to 
 // standard, example: 18:45 to 6:45 PM. Uses built-in JS new Date() Function.
-function displayDayTime() {
+function displayDayTime(timestamp) {
   let now = new Date();
-  let militaryHours = now.getHours();
-  let rawMinutes = now.getMinutes();
   let days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   let today = days[now.getDay()];
-  let hours;
-  let minutes;
-  let toggleAmPm;
 
-
-  if (militaryHours > 12) {
-    hours = militaryHours - 12;
-    toggleAmPm = 'PM';
-  } else if (militaryHours = 12) {
-    hours = militaryHours;
-    toggleAmPm = 'PM';
-  } else {
-    hours = militaryHours;
-    toggleAmPm = 'AM';
-  }
-  if (rawMinutes < 10) {
-    minutes = `0${rawMinutes}`;
-  } else {
-    minutes = rawMinutes;
-  }
-  let currentDayTime = document.querySelector("#day-time");
-  currentDayTime.innerHTML = `${today} ${hours}:${minutes} ${toggleAmPm}`;
+  return `${today} ${formatHours(timestamp)}`;
 }
 
 displayDayTime();
@@ -43,8 +21,6 @@ function formatHours(timestamp) {
 
   if (militaryHours > 12) {
     hours = militaryHours - 12;
-  } else if (militaryHours = 12) {
-    hours = militaryHours;
   } else {
     hours = militaryHours;
   }
@@ -68,6 +44,7 @@ function showData(response) {
   document.querySelector("#humidity").innerHTML = response.data.main.humidity;
   document.querySelector("#wind").innerHTML = Math.round(response.data.wind.speed);
   document.querySelector("#current-weather-description").innerHTML = response.data.weather[0].description;
+  document.querySelector("#day-time").innerHTML = displayDayTime(response.data.dt * 1000);
   document.querySelector("#icon").setAttribute("src", `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`);
   document.querySelector("#icon").setAttribute("alt", response.data.weather[0].description);
 
@@ -84,17 +61,12 @@ function displayForecast(response) {
     forecast = response.data.list[index];
     forecastElement.innerHTML += `
       <div class="col-2">
-        <span>
-         ${formatHours(forecast.dt * 1000)}
-        </span>
+        <span>${formatHours(forecast.dt * 1000)}</span>
         <br />
-        <span>
-          ${Math.round(forecast.main.temp_max)}° | ${Math.round(forecast.main.temp_min)}° 
-        </span>
+        <span>${Math.round(forecast.main.temp_max)}° | ${Math.round(forecast.main.temp_min)}°</span>
         <br />
-        <img  src="http://openweathermap.org/img/wn/${forecast.weather[0].icon}@2x.png"
-              alt="weather icon"
-        />
+        <img class="forecast-icon" src="http://openweathermap.org/img/wn/${forecast.weather[0].icon}@2x.png"
+              alt="weather icon"/>
       </div>`;
   }
 }

@@ -127,3 +127,13 @@ footer {
   color: white;
   text-decoration: none;
 }
+
+.forecast-icon {
+  width: 50%;
+  height: 50%;
+}
+
+.icon {
+  position: relative;
+  top: -15px;
+}
