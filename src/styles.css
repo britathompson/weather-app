@@ -38,7 +38,7 @@ footer {
 }
 
 .weather-page {
-  background-image: linear-gradient(to right, #b4a28a 0%, #304352 100%);
+  background-image: linear-gradient(to right, #b4a28a 0%, #415a6e 100%);
   border-radius: 5px;
   color: #fff;
   font-family: "Roboto", sans-serif;
@@ -137,3 +137,5 @@ footer {
   position: relative;
   top: -15px;
 }
+
+

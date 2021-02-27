@@ -23,7 +23,6 @@ function formatHours(timestamp) {
   } else {
     minutes = rawMinutes;
   }
-
   return `${hours}:${minutes}`
 }
 
@@ -52,12 +51,16 @@ function displayForecast(response) {
       <div class="col-2">
         <span>${formatHours(forecast.dt * 1000)}</span>
         <br />
-        <span>${Math.round(forecast.main.temp_max)}° | ${Math.round(forecast.main.temp_min)}°</span>
+        <span><span id="forecast-temp">${Math.round(forecast.main.temp_max)}</span>° | ${Math.round(forecast.main.temp_min)}°</span>
         <br />
         <img class="forecast-icon" src="http://openweathermap.org/img/wn/${forecast.weather[0].icon}@2x.png"
               alt="weather icon"/>
       </div>`;
   }
+}
+
+function ifError() {
+  alert(`Cannot find city. Please check spelling and try again.`);
 }
 
 function fetchData(city) {
@@ -67,7 +70,7 @@ function fetchData(city) {
   axios.get(apiUrl).then(showData);
 
   apiUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=${units}`;
-  axios.get(apiUrl).then(displayForecast);
+  axios.get(apiUrl).then(displayForecast).catch(ifError);
 }
 
 function cityInput(event) {
@@ -85,25 +88,12 @@ function fetchCurrentData(position) {
   axios.get(apiUrl).then(showData);
   apiUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=${units}`;
   axios.get(apiUrl).then(displayForecast);
-  console.log(fetchCurrentData);
 }
 
 function getCurrentPosition(event) {
   event.preventDefault();
   navigator.geolocation.getCurrentPosition(fetchCurrentData);
 }
-
-// function searchCurrentPosition(position) {
-//   let latitude = position.coords.latitude;
-//   let longitude = position.coords.longitude;
-//   let units = `metric`;
-//   let apiKey = '55bf9ac355060024d43ce8b4b16fd6fa';
-//   let apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=${units}`;
-//   axios.get(apiUrl).then(showWeather);
-//   apiUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=${units}`;
-//   axios.get(apiUrl).then(displayForecast);
-//   console.log()
-// }
 
 function toCelsius(event) {
   event.preventDefault();
@@ -125,6 +115,7 @@ function toFahrenheit(event) {
 }
 
 let celsiusTemperature = null;
+let celsiusTemperatureForecast = null;
 
 let fahrenheit = document.querySelector("#fahrenheit-link");
 fahrenheit.addEventListener('click', toFahrenheit);
@@ -139,3 +130,19 @@ let currentButton = document.querySelector("#current-button");
 currentButton.addEventListener('click', getCurrentPosition);
 
 fetchData('New York');
+
+
+
+
+let forecastMax = document.querySelectorAll(".forecast-max");
+forecastMax.forEach(function (item) {
+  let currentTemp = item.innerHTML;
+  currentTemp = currentTemp.replace("°C", "");
+  item.innerHTML = `${Math.round((currentTemp * 9) / 5 + 32)}°F`;
+});
+let forecastMin = document.querySelectorAll(".forecast-min");
+forecastMin.forEach(function (item) {
+  let currentTemp = item.innerHTML;
+  currentTemp = currentTemp.replace("°C", "");
+  item.innerHTML = `${Math.round((currentTemp * 9) / 5 + 32)}°F`;
+});
