@@ -51,7 +51,7 @@ function displayForecast(response) {
       <div class="col-2">
         <span>${formatHours(forecast.dt * 1000)}</span>
         <br />
-        <span><span id="forecast-temp">${Math.round(forecast.main.temp_max)}</span>° | ${Math.round(forecast.main.temp_min)}°</span>
+        <span><span class="forecast-temp-high">${Math.round(forecast.main.temp_max)}</span>° | <span class="forecast-temp-low">${Math.round(forecast.main.temp_min)}</span>°</span>
         <br />
         <img class="forecast-icon" src="http://openweathermap.org/img/wn/${forecast.weather[0].icon}@2x.png"
               alt="weather icon"/>
@@ -102,6 +102,20 @@ function toCelsius(event) {
 
   celsius.classList.add("active");
   fahrenheit.classList.remove("active");
+
+  let forecastTempHigh = document.querySelectorAll(".forecast-temp-high");
+  forecastTempHigh.forEach(function (item) {
+    let currentTempHigh = item.innerHTML;
+    let newTempHigh = `${Math.round(((currentTempHigh - 32) * 5) / 9)}`;
+    item.innerHTML = newTempHigh;
+  });
+
+  let forecastTempLow = document.querySelectorAll(".forecast-temp-low");
+  forecastTempLow.forEach(function (item) {
+    let currentTempLow = item.innerHTML;
+    let newTempLow = `${Math.round(((currentTempLow - 32) * 5) / 9)}`;
+    item.innerHTML = newTempLow;
+  });
 }
 
 function toFahrenheit(event) {
@@ -112,6 +126,20 @@ function toFahrenheit(event) {
 
   celsius.classList.remove("active");
   fahrenheit.classList.add("active");
+
+  let forecastTempHigh = document.querySelectorAll(".forecast-temp-high");
+  forecastTempHigh.forEach(function (item) {
+    let currentTempHigh = item.innerHTML;
+    let newTempHigh = `${Math.round((currentTempHigh * 9) / 5 + 32)}`;
+    item.innerHTML = newTempHigh;
+  });
+  
+  let forecastTempLow = document.querySelectorAll(".forecast-temp-low");
+  forecastTempLow.forEach(function (item) {
+    let currentTempLow = item.innerHTML;
+    let newTempLow = `${Math.round((currentTempLow * 9) / 5 + 32)}`;
+    item.innerHTML = newTempLow;
+  });
 }
 
 let celsiusTemperature = null;
@@ -132,17 +160,3 @@ currentButton.addEventListener('click', getCurrentPosition);
 fetchData('New York');
 
 
-
-
-let forecastMax = document.querySelectorAll(".forecast-max");
-forecastMax.forEach(function (item) {
-  let currentTemp = item.innerHTML;
-  currentTemp = currentTemp.replace("°C", "");
-  item.innerHTML = `${Math.round((currentTemp * 9) / 5 + 32)}°F`;
-});
-let forecastMin = document.querySelectorAll(".forecast-min");
-forecastMin.forEach(function (item) {
-  let currentTemp = item.innerHTML;
-  currentTemp = currentTemp.replace("°C", "");
-  item.innerHTML = `${Math.round((currentTemp * 9) / 5 + 32)}°F`;
-});
