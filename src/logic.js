@@ -1,6 +1,3 @@
-////////////////////////////////////////////////////////////////////////////
-// Fetches and displays local day and time, changes time from military to 
-// standard, example: 18:45 to 6:45 PM. Uses built-in JS new Date() Function.
 function displayDayTime(timestamp) {
   let now = new Date();
   let days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -8,9 +5,6 @@ function displayDayTime(timestamp) {
 
   return `${today} ${formatHours(timestamp)}`;
 }
-
-displayDayTime();
-////////////////////////////////////////////////////////////////////////////
 
 function formatHours(timestamp) {
   let now = new Date(timestamp);
@@ -29,20 +23,16 @@ function formatHours(timestamp) {
   } else {
     minutes = rawMinutes;
   }
+
   return `${hours}:${minutes}`
 }
 
-////////////////////////////////////////////////////////////////////////////
-// Fetches and displays current temperature, city name, feels-like, humidity,
-// wind, and weather-description based on user form input, as well as whatever 
-// initial parameter is fed through fetchData upon loading. Uses Axios AJAX 
-// method to fetch data Objects.
 function showData(response) {
   document.querySelector("#temperature").innerHTML = Math.round(response.data.main.temp);
   document.querySelector("#city-name").innerHTML = response.data.name;
   document.querySelector("#feels-like").innerHTML = Math.round(response.data.main.feels_like);
   document.querySelector("#humidity").innerHTML = response.data.main.humidity;
-  document.querySelector("#wind").innerHTML = Math.round(response.data.wind.speed);
+  document.querySelector("#wind").innerHTML = Math.round((response.data.wind.speed) * 18 / 5);
   document.querySelector("#current-weather-description").innerHTML = response.data.weather[0].description;
   document.querySelector("#day-time").innerHTML = displayDayTime(response.data.dt * 1000);
   document.querySelector("#icon").setAttribute("src", `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`);
@@ -55,7 +45,6 @@ function displayForecast(response) {
   let forecastElement = document.querySelector("#forecast");
   forecastElement.innerHTML = null;
   let forecast = null;
-
 
   for (let index = 0; index < 6; index++) {
     forecast = response.data.list[index];
@@ -87,19 +76,6 @@ function cityInput(event) {
   fetchData(inputCity);
 }
 
-let searchForm = document.querySelector("#search-form");
-searchForm.addEventListener('submit', cityInput);
-
-fetchData('New York');
-////////////////////////////////////////////////////////////////////////////
-
-
-
-////////////////////////////////////////////////////////////////////////////
-// When 'pin' button is clicked, fetches current temperature, city name, 
-// feels - like, humidity, wind, and weather-description of users location 
-// using built in JS geolocation. Uses Axios AJAX method to fetch data Objects 
-// and sends data to function showData (above) to be displayed.
 function fetchCurrentData(position) {
   let apiKey = '55bf9ac355060024d43ce8b4b16fd6fa';
   let units = 'metric';
@@ -107,6 +83,9 @@ function fetchCurrentData(position) {
   let longitude = position.coords.longitude;
   let apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=${units}`;
   axios.get(apiUrl).then(showData);
+  apiUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=${units}`;
+  axios.get(apiUrl).then(displayForecast);
+  console.log(fetchCurrentData);
 }
 
 function getCurrentPosition(event) {
@@ -114,16 +93,18 @@ function getCurrentPosition(event) {
   navigator.geolocation.getCurrentPosition(fetchCurrentData);
 }
 
-let currentButton = document.querySelector("#current-button");
-currentButton.addEventListener('click', getCurrentPosition);
-////////////////////////////////////////////////////////////////////////////
+// function searchCurrentPosition(position) {
+//   let latitude = position.coords.latitude;
+//   let longitude = position.coords.longitude;
+//   let units = `metric`;
+//   let apiKey = '55bf9ac355060024d43ce8b4b16fd6fa';
+//   let apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=${units}`;
+//   axios.get(apiUrl).then(showWeather);
+//   apiUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=${units}`;
+//   axios.get(apiUrl).then(displayForecast);
+//   console.log()
+// }
 
-
-
-////////////////////////////////////////////////////////////////////////////
-// Targets the innerHTML of temperature to convert to fahrenheit when 'F'
-// is clicked and back to celsius when 'C' is clicked. Adds/removes default
-// link styling on inactive links.
 function toCelsius(event) {
   event.preventDefault();
   let temperature = document.querySelector("#temperature");
@@ -150,21 +131,11 @@ fahrenheit.addEventListener('click', toFahrenheit);
 
 let celsius = document.querySelector("#celsius-link")
 celsius.addEventListener('click', toCelsius);
-////////////////////////////////////////////////////////////////////////////
 
+let searchForm = document.querySelector("#search-form");
+searchForm.addEventListener('submit', cityInput);
 
+let currentButton = document.querySelector("#current-button");
+currentButton.addEventListener('click', getCurrentPosition);
 
-////////////////////////////////////////////////////////////////////////////
-// function displayNextDay() {
-//   let then = new Date();
-//   let days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-//   let day = days[then.getDay()];
-  
-//   let currentDayTime = document.querySelector("#day-time");
-
-// }
-
-// displayNextDay();
-////////////////////////////////////////////////////////////////////////////
-
-
+fetchData('New York');
