@@ -92,7 +92,10 @@ function fetchCurrentData(position) {
 
 function getCurrentPosition(event) {
   event.preventDefault();
+  celsius.classList.add("active");
+  fahrenheit.classList.remove("active");
   navigator.geolocation.getCurrentPosition(fetchCurrentData);
+
 }
 
 function toCelsius(event) {
@@ -116,7 +119,11 @@ function toCelsius(event) {
     let newTempLow = `${Math.round(((currentTempLow - 32) * 5) / 9)}`;
     item.innerHTML = newTempLow;
   });
+
+  celsius.removeEventListener('click', toCelsius);
+  fahrenheit.addEventListener('click', toFahrenheit);
 }
+
 
 function toFahrenheit(event) {
   event.preventDefault();
@@ -130,20 +137,24 @@ function toFahrenheit(event) {
   let forecastTempHigh = document.querySelectorAll(".forecast-temp-high");
   forecastTempHigh.forEach(function (item) {
     let currentTempHigh = item.innerHTML;
-    let newTempHigh = `${Math.round((currentTempHigh * 9) / 5 + 32)}`;
+    let newTempHigh = `${Math.round((currentTempHigh * (9 / 5)) + 32)}`;
     item.innerHTML = newTempHigh;
   });
   
   let forecastTempLow = document.querySelectorAll(".forecast-temp-low");
   forecastTempLow.forEach(function (item) {
     let currentTempLow = item.innerHTML;
-    let newTempLow = `${Math.round((currentTempLow * 9) / 5 + 32)}`;
+    let newTempLow = `${Math.round((currentTempLow * (9 / 5) + 32))}`;
     item.innerHTML = newTempLow;
   });
+
+  celsius.addEventListener('click', toCelsius);
+  fahrenheit.removeEventListener('click', toFahrenheit);
 }
 
 let celsiusTemperature = null;
-let celsiusTemperatureForecast = null;
+// let currentTempHigh = null;
+// let currentTempLow = null;
 
 let fahrenheit = document.querySelector("#fahrenheit-link");
 fahrenheit.addEventListener('click', toFahrenheit);
@@ -158,5 +169,3 @@ let currentButton = document.querySelector("#current-button");
 currentButton.addEventListener('click', getCurrentPosition);
 
 fetchData('New York');
-
-
