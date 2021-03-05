@@ -160,14 +160,11 @@ function toCelsius(event) {
 }
 
 let celsiusTemperature = null;
-let currentTempHigh = null;
-let currentTempLow = null;
 
 let fahrenheit = document.querySelector("#fahrenheit-link");
 fahrenheit.addEventListener('click', toFahrenheit);
 
 let celsius = document.querySelector("#celsius-link")
-celsius.addEventListener('click', toCelsius);
 
 let searchForm = document.querySelector("#search-form");
 searchForm.addEventListener('submit', cityInput);
@@ -176,6 +173,3 @@ let currentButton = document.querySelector("#current-button");
 currentButton.addEventListener('click', getCurrentPosition);
 
 fetchData('New York');
-
-// let hi = "hello";
-// console.log(hi);
