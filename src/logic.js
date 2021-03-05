@@ -95,55 +95,32 @@ function getCurrentPosition(event) {
   celsius.classList.add("active");
   fahrenheit.classList.remove("active");
   navigator.geolocation.getCurrentPosition(fetchCurrentData);
-
 }
-
-function toCelsius(event) {
-  event.preventDefault();
-  let temperature = document.querySelector("#temperature");
-  temperature.innerHTML = celsiusTemperature;
-
-  celsius.classList.add("active");
-  fahrenheit.classList.remove("active");
-
-  let forecastTempHigh = document.querySelectorAll(".forecast-temp-high");
-  forecastTempHigh.forEach(function (item) {
-    let currentTempHigh = item.innerHTML;
-    let newTempHigh = `${Math.round(((currentTempHigh - 32) * 5) / 9)}`;
-    item.innerHTML = newTempHigh;
-  });
-
-  let forecastTempLow = document.querySelectorAll(".forecast-temp-low");
-  forecastTempLow.forEach(function (item) {
-    let currentTempLow = item.innerHTML;
-    let newTempLow = `${Math.round(((currentTempLow - 32) * 5) / 9)}`;
-    item.innerHTML = newTempLow;
-  });
-
-  celsius.removeEventListener('click', toCelsius);
-  fahrenheit.addEventListener('click', toFahrenheit);
-}
-
 
 function toFahrenheit(event) {
   event.preventDefault();
+  
   let temperature = document.querySelector("#temperature");
   let changeToFahrenheit = (celsiusTemperature * (9 / 5)) + 32;
   temperature.innerHTML = Math.round(changeToFahrenheit);
+
+  let feelsLike = document.querySelector("#feels-like");
+  let feelsLikeChangeToFahrenheit = (feelsLike.innerHTML * (9 / 5)) + 32;
+  feelsLike.innerHTML = Math.round(feelsLikeChangeToFahrenheit);
 
   celsius.classList.remove("active");
   fahrenheit.classList.add("active");
 
   let forecastTempHigh = document.querySelectorAll(".forecast-temp-high");
   forecastTempHigh.forEach(function (item) {
-    let currentTempHigh = item.innerHTML;
+    currentTempHigh = item.innerHTML;
     let newTempHigh = `${Math.round((currentTempHigh * (9 / 5)) + 32)}`;
     item.innerHTML = newTempHigh;
   });
   
   let forecastTempLow = document.querySelectorAll(".forecast-temp-low");
   forecastTempLow.forEach(function (item) {
-    let currentTempLow = item.innerHTML;
+    currentTempLow = item.innerHTML;
     let newTempLow = `${Math.round((currentTempLow * (9 / 5) + 32))}`;
     item.innerHTML = newTempLow;
   });
@@ -152,9 +129,39 @@ function toFahrenheit(event) {
   fahrenheit.removeEventListener('click', toFahrenheit);
 }
 
+function toCelsius(event) {
+  event.preventDefault();
+  
+  let temperature = document.querySelector("#temperature");
+  temperature.innerHTML = celsiusTemperature;
+
+  let feelsLike = document.querySelector("#feels-like");
+  feelsLike.innerHTML = Math.round(((feelsLike.innerHTML - 32) * 5) / 9);
+
+  celsius.classList.add("active");
+  fahrenheit.classList.remove("active");
+
+  let forecastTempHigh = document.querySelectorAll(".forecast-temp-high");
+  forecastTempHigh.forEach(function (item) {
+    currentTempHigh = item.innerHTML;
+    let newTempHigh = `${Math.round(((currentTempHigh - 32) * 5) / 9)}`;
+    item.innerHTML = newTempHigh;
+  });
+
+  let forecastTempLow = document.querySelectorAll(".forecast-temp-low");
+  forecastTempLow.forEach(function (item) {
+    currentTempLow = item.innerHTML;
+    let newTempLow = `${Math.round(((currentTempLow - 32) * 5) / 9)}`;
+    item.innerHTML = newTempLow;
+  });
+
+  celsius.removeEventListener('click', toCelsius);
+  fahrenheit.addEventListener('click', toFahrenheit);
+}
+
 let celsiusTemperature = null;
-// let currentTempHigh = null;
-// let currentTempLow = null;
+let currentTempHigh = null;
+let currentTempLow = null;
 
 let fahrenheit = document.querySelector("#fahrenheit-link");
 fahrenheit.addEventListener('click', toFahrenheit);
@@ -169,3 +176,6 @@ let currentButton = document.querySelector("#current-button");
 currentButton.addEventListener('click', getCurrentPosition);
 
 fetchData('New York');
+
+// let hi = "hello";
+// console.log(hi);
